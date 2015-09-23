@@ -1,0 +1,7 @@
+#!/usr/bin/python
+
+import qrec
+
+print "qrec !!"
+
+# vim: set filetype=python:
