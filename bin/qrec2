@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+
+import thread
+import os
+from optparse import OptionParser
+import pyaudio
+import wave
+from qrec import Recorder
+import qrec.qfile as qf
+
+
+parser = OptionParser()
+parser.add_option("-o", "--output", dest="output",
+                  help="create sound files in DIR", metavar="DIR",
+                  default="./sound")
+
+(options, args) = parser.parse_args()
+
+filename = args[0]
+
+# Prepare output directory
+output_dir = options.output
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
+lines = qf.open(filename)
+print "\n\nWelcome to QRec (" + str(len(lines)) + " files to record)\n"
+
+with Recorder() as rec:
+    for i, l in enumerate(lines):
+        print str(i) + "  \033[92m" + l + "\033[0m\t",
+        while True:
+            ans = raw_input("(r: record, c: cancel) [r] ")
+            if ans == 'c':
+                print "Exiting..."
+                exit()
+            elif ans == '' or ans == 'r':
+                rec.start()
+                raw_input()
+                rec.stop()
+
+                filename = output_dir + "/" + "_".join(l.split())
+                rec.save(filename)
+
+                break
+            else:
+                print "Invalid answer"
+
+exit()
+
+def record(rec):
+    rec.start()
+    sys.stdout.write("Recording... [enter to stop] ")
+    raw_input()
+
+    rec.stop()
+    print "Recorded X s"  # + "recorded 5.2 s"
+
+    if autoreplay:
+        rec.play()
+        print "Do you accept the recording ?"
+        while True:
+            ans = raw_input("(p: play, a: accept, r: reject) [a] ")
+            if ans == 'p':
+                rec.play()
+                print "Do you accept the recording ?"
+            elif ans == '' or ans == 'r':
+                rec.start()
+                raw_input()
+                rec.stop()
+
+                filename = output_dir + "/" + "_".join(l.split())
+                rec.save(filename)
+
+                break
+            else:
+                print "Invalid answer"
+    else:
+        pass
+
+# vim: set filetype=python:

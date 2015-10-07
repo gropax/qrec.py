@@ -1,8 +1,0 @@
-setup.py
-bin/qrec
-qrec/__init__.py
-qrec.egg-info/PKG-INFO
-qrec.egg-info/SOURCES.txt
-qrec.egg-info/dependency_links.txt
-qrec.egg-info/not-zip-safe
-qrec.egg-info/top_level.txt

@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='qrec',
-      version='0.0.1',
+      version='0.0.0',
       description='Quickly record list of short sound files',
       url='http://www.github.com/gropax/qrec.py',
       author='gropax',
