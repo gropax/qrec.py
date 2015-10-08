@@ -36,7 +36,6 @@ class Recorder:
         return (len(self.frames) * CHUNK) / RATE
 
     def save(self, filename):
-        print "save !!"
         if not self.frames:
             raise "No audio have been recorded yet !"
 
