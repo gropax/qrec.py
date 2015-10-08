@@ -39,13 +39,14 @@ def filename(item):
 def record(rec, opts, item):
     sys.stdout.write("\033[92m" + item + "\033[0m\t")
 
-    sys.stdout.write("  [Rq] ")
+    sys.stdout.write("  [Rsq] ")
     while True:
         ans = raw_input() or "r"
         if ans == 'q':
             print "Exiting..."
             exit()
-
+        elif ans == 's':
+            break
         elif ans == 'r':
             accepted = False
             while not accepted:
@@ -78,13 +79,13 @@ def record(rec, opts, item):
                 # if `autoreplay` mode is off, always accept
                 else:
                     accepted = True
+
+            f = filename(item)
+            rec.save(f)
             break
 
         else:
             print "Invalid answer [r: record, q: quit]"
-
-    f = filename(item)
-    rec.save(f)
 
 
 with Recorder() as rec:

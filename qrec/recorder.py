@@ -13,6 +13,7 @@ RATE = 44100
 class Recorder:
     def __init__(self):
         self.pyaudio = pyaudio.PyAudio()
+        self.frames = []
 
     def __enter__(self):
         return self
