@@ -1,5 +1,7 @@
 .ropeproject/
 *.swp
+sandbox/
+sound/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

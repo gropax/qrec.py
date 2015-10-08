@@ -1,12 +1,13 @@
+from __future__ import division
 import thread
 import wave
 import pyaudio
+import time
 
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 2
 RATE = 44100
-RECORD_SECONDS = 5
 
 
 class Recorder:
@@ -29,8 +30,13 @@ class Recorder:
 
     def stop(self):
         self.signal = True
+        #time.sleep(0.2)
+
+    def duration(self):
+        return (len(self.frames) * CHUNK) / RATE
 
     def save(self, filename):
+        print "save !!"
         if not self.frames:
             raise "No audio have been recorded yet !"
 
@@ -57,4 +63,15 @@ class Recorder:
             self.frames.append(data)
 
         stream.stop_stream()
+        stream.close()
+
+    def play(self):
+        stream = self.pyaudio.open(format=FORMAT,
+                                   channels=CHANNELS,
+                                   rate=RATE,
+                                   output=True,
+                                   frames_per_buffer=CHUNK)
+        for chunk in self.frames:
+            data = stream.write(chunk)
+
         stream.close()
